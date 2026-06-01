@@ -1,14 +1,17 @@
 import {
-    Box,
     Typography,
     Button,
+    Card,
+    CardMedia,
+    CardContent,
+    Box,
 } from "@mui/material";
 import { grey, blue } from "@mui/material/colors";
 
 
 const BookCard = ({ book }) => {
     return (
-        <Box
+        <Card
             sx={{
                 p: 1,
                 display: "flex",
@@ -19,7 +22,9 @@ const BookCard = ({ book }) => {
                 borderRadius: "16px",
             }}
         >
-            <Box
+            <CardMedia
+                component="img"
+                alt={book.name}
                 sx={{
                     width: "100%",
                     aspectRatio: "4/3",
@@ -29,14 +34,30 @@ const BookCard = ({ book }) => {
                 }}
             >
                 {/* Empty for image placeholder */}
+            </CardMedia>
+            <Box
+                sx={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    gap: 1,
+                }}
+            >
+                <Typography variant="h5">
+                    {book.name}
+                </Typography>
+                <Typography variant="body1">
+                    ${book.price}
+                </Typography>
+                <Button
+                    variant="contained"
+                >
+                    See Details
+                </Button>
             </Box>
-            <Typography variant="h5">
-                {book.name}
-            </Typography>
-            <Typography>
-                {book.price}
-            </Typography>
-        </Box>
+        </Card>
     );
 }
 

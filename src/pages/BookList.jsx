@@ -11,17 +11,17 @@ const BookList = () => {
 
 
     const books = [
-        { id: 1, name: "Laptop", price: 999 },
-        { id: 2, name: "Phone", price: 599 },
-        { id: 3, name: "Mouse", price: 199 },
-        { id: 4, name: "Keyboard", price: 299 },
+        { id: 1, name: "Laptop", price: 999, description: "High-performance laptop with 16GB RAM and 512GB SSD." },
+        { id: 2, name: "Phone", price: 599, description: "Latest smartphone with an OLED display and 128GB storage." },
+        { id: 3, name: "Mouse", price: 199, description: "Ergonomic wireless mouse with adjustable DPI." },
+        { id: 4, name: "Keyboard", price: 299, description: "Mechanical keyboard with RGB backlighting." },
     ];
 
     return (
         <Container>
             <Typography
                 variant="h4"
-                sx={{ 
+                sx={{
                     mb: 6,
                     textAlign: "center",
                 }}

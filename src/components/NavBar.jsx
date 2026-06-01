@@ -8,7 +8,7 @@ import {
 
 const NavBar = () => {
     return (
-        <AppBar position="relative" sx={{ p: 4 }}>
+        <AppBar position="fixed" sx={{ p: 4 }}>
            <Container maxWidth="xl">
              <Box sx={{
                 display: "flex",

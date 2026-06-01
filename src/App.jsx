@@ -7,18 +7,20 @@ import { theme } from './theme';
 // Route Imports
 import BookList from './pages/BookList';
 
+// Component imports
+import NavBar from './components/NavBar';
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <CssBaseline /> {/** Apply dark theme to all elements */}
       <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<BookList />} />
-      </Routes>
-    </BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<BookList />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

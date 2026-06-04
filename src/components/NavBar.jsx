@@ -1,37 +1,63 @@
 import { Link } from "react-router-dom";
-import { 
-    AppBar, 
-    Container, 
+import {
+    AppBar,
+    Container,
     Box,
     Typography,
+    Toolbar,
+    Tooltip,
+    Button,
 } from "@mui/material";
 
 const NavBar = () => {
+
+
+    const pages = [
+        { name: 'Books', path: '/' },
+        { name: 'Categories', path: '/categories' },
+        { name: 'Authors', path: '/authors' },
+    ];
+
     return (
-        <AppBar position="fixed" sx={{ p: 4 }}>
-           <Container maxWidth="xl">
-             <Box sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between"
-            }}>
-                <Typography
-                    variant="h6"
-                    component={Link}
-                    to="/"
-                    sx={{
-                        fontWeight: 700,
-                        color: "#fff",
-                        textDecoration: "none"
-                    }}
-                >
-                    Book Store
-                </Typography>
-                <Typography>
-                    Cart
-                </Typography>
-            </Box>
-           </Container>
+        <AppBar position="fixed">
+            <Container maxWidth="xl">
+                <Toolbar disableGutters>
+                    <Typography
+                        variant="h6"
+                        component={Link}
+                        to="/"
+                        sx={{
+                            mr: 2,
+                            fontWeight: 700,
+                            color: 'inherit',
+                            textDecoration: 'none',
+                        }}
+                    >
+                        eShop
+                    </Typography>
+
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        {pages.map((page) => (
+                            <Button
+                                key={page.name}
+                                component={Link}
+                                to={page.path}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                {page.name}
+                            </Button>
+                        ))}
+                    </Box>
+
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Cart">
+                            <Typography>
+                                Cart
+                            </Typography>
+                        </Tooltip>
+                    </Box>
+                </Toolbar>
+            </Container>
         </AppBar>
     );
 }

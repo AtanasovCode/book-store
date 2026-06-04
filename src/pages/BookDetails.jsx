@@ -12,6 +12,7 @@ export default function BookDetails() {
 
     const [book, setBook] = useState()
     const [notFound, setNotFound] = useState(false)
+    const [error, setError] = useState()
 
     useEffect(() => {
         booksRepository.findById(id)
@@ -24,6 +25,21 @@ export default function BookDetails() {
                 setNotFound(true)
             })
     }, [id])
+
+
+    const handleDelete = async () => {
+        if (window.confirm(`Are you sure you want to delete ${book?.name}`)) {
+            try {
+                await booksRepository.deleteById(id)
+                navigate("/")
+            }
+            catch (e) {
+                console.error("Delete failed", e)
+                setError("Failed to delete the product")
+            }
+        }
+    }
+
 
     if (notFound) {
         return (
@@ -56,6 +72,7 @@ export default function BookDetails() {
                 </Typography>
                 <Button variant="contained" sx={{ mr: 1 }}>Add to Cart</Button>
                 <Button variant="outlined" onClick={() => navigate("/")}>Back</Button>
+                <Button variant="outlined" onClick={() => handleDelete()}>Delete</Button>
             </Paper>
         </Container>
     );

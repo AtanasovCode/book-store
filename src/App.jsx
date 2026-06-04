@@ -11,6 +11,8 @@ import NavBar from './components/NavBar';
 // Route Imports
 import BookList from './pages/BookList';
 import BookDetails from './pages/BookDetails';
+import CategoryList from './pages/CategoryList';
+import AuthorList from './pages/AuthorList';
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
           <Routes>
             <Route path="/" element={<BookList />} />
             <Route path="/books/:id" element={<BookDetails />} />
+            <Route path="/categories" element={<CategoryList />} />
+            <Route path="/authors" element={<AuthorList />} />
           </Routes>
         </Box>
       </BrowserRouter>

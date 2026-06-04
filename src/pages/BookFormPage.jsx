@@ -5,6 +5,9 @@ import categoriesRepository from "../components/repository/categoriesRepository"
 import authorsRepository from "../components/repository/authorsRepository"
 import {
     Container,
+    Box,
+    Typography,
+    Button,
     TextField,
     MenuItem,
 } from "@mui/material"
@@ -28,6 +31,7 @@ export default function BookFormPage() {
     const [categories, setCategories] = useState([])
     const [authors, setAuthors] = useState([])
     const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(true)
 
 
     useEffect(() => {
@@ -40,7 +44,7 @@ export default function BookFormPage() {
                 setCategories(categoriesResponse.data)
                 setAuthors(authorsResponse.data)
 
-                if(bookResponse && editMode) {
+                if (bookResponse && editMode) {
                     const { name, price, quantity, pages, category, author } = bookResponse.data
 
                     setBook({
@@ -57,6 +61,7 @@ export default function BookFormPage() {
                 console.error(e)
                 setError("Couldn't retrieve categories and/or authors")
             })
+            .finally(() => setLoading(false))
     }, [id])
 
 
@@ -68,6 +73,7 @@ export default function BookFormPage() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError(null)
+        setLoading(true)
 
         payload = {
             name: book.name,
@@ -86,46 +92,155 @@ export default function BookFormPage() {
             console.error(e)
             setError("Failed to add new book")
         }
+        finally {
+            setLoading(false)
+        }
+    }
+
+    const handleUpdate = async (e) => {
+        e.preventDefault()
+        setError(null)
+        setLoading(true)
+
+        const payload = {
+            name: book.name,
+            price: parseFloat(book.price) || 0,
+            quantity: parseInt(book.quantity) || 0,
+            pages: parseInt(book.pages) || 0,
+            category_id: parseInt(book.category_id),
+            author_id: parseInt(book.author_id)
+        }
+
+        try {
+            await booksRepository.update(payload, id)
+            navigate("/")
+        }
+        catch (e) {
+            console.error(e)
+        }
+        finally {
+            setLoading(false)
+        }
     }
 
 
 
     return (
-        <Container>
-            <TextField name="name" label="Name" value={book.name} onChange={handleChange} />
-            <TextField name="price" label="Price" value={book.price} onChange={handleChange} />
-            <TextField name="quantity" label="Quantity" value={book.quantity} onChange={handleChange} />
-            <TextField name="pages" label="Page Count" value={book.pages} onChange={handleChange} />
-            <TextField
-                name="category_id"
-                label="Category"
-                select
-                value={book.category_id}
-                onChange={handleChange}
-                required
-                fullWidth
-            >
-                {categories.map((cat) => (
-                    <MenuItem key={cat.id} value={cat.id}>
-                        {cat.name}
-                    </MenuItem>
-                ))}
-            </TextField>
-            <TextField
-                name="author_id"
-                label="Author"
-                select
-                value={book.author_id}
-                onChange={handleChange}
-                required
-                fullWidth
-            >
-                {authors.map((cat) => (
-                    <MenuItem key={cat.id} value={cat.id}>
-                        {cat.name}
-                    </MenuItem>
-                ))}
-            </TextField>
+        <Container maxWidth="sm">
+            {
+                loading ?
+                    <Typography>Loading...</Typography>
+                    :
+                    <Box>
+                        <Box
+                            component="form"
+                            onSubmit={editMode ? handleUpdate : handleSubmit}
+                            sx={{
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 3,
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}
+                        >
+                            <Typography variant="h4" sx={{ mb: 2 }}>
+                                {
+                                    editMode ?
+                                        "Update book"
+                                        :
+                                        "Create New book"
+                                }
+                            </Typography>
+                            <TextField
+                                name="name"
+                                label="book Name"
+                                value={book.name}
+                                variant="filled"
+                                type="text"
+                                onChange={handleChange}
+                                fullWidth
+                                required
+                            />
+                            <TextField
+                                name="price"
+                                label="Price"
+                                value={book.price}
+                                variant="filled"
+                                type="number"
+                                onChange={handleChange}
+                                fullWidth
+                                required
+                            />
+                            <TextField
+                                name="quantity"
+                                label="Quantity"
+                                value={book.quantity}
+                                variant="filled"
+                                type="number"
+                                onChange={handleChange}
+                                fullWidth
+                                required
+                            />
+                            <TextField
+                                name="pages"
+                                label="Page Count"
+                                value={book.pages}
+                                variant="filled"
+                                type="number"
+                                onChange={handleChange}
+                                fullWidth
+                                required
+                            />
+                            <TextField
+                                name="category_id"
+                                label="Category"
+                                select
+                                value={book.category_id}
+                                onChange={handleChange}
+                                variant="filled"
+                                required
+                                fullWidth
+                            >
+                                {
+                                    categories.map((cat) => {
+                                        return (
+                                            <MenuItem key={cat.id} value={cat.id}>
+                                                {cat.name}
+                                            </MenuItem>
+                                        );
+                                    })
+                                }
+                            </TextField>
+                            <TextField
+                                name="author_id"
+                                label="Author"
+                                value={book.author_id}
+                                variant="filled"
+                                onChange={handleChange}
+                                select
+                                required
+                                fullWidth
+
+                            >
+                                {
+                                    authors.map((aut) => {
+                                        return (
+                                            <MenuItem key={aut.id} value={aut.id}>
+                                                {aut.name}
+                                            </MenuItem>
+                                        );
+                                    })
+                                }
+                            </TextField>
+                            <Button fullWidth type="submit" variant="contained">
+                                {
+                                    editMode ? "Update" : "Submit"
+                                }
+                            </Button>
+                        </Box>
+                    </Box>
+            }
         </Container>
     );
 }

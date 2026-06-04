@@ -10,11 +10,11 @@ const booksRepository = {
     deleteById: async (id) => {
         return await axiosInstance.delete(`/books/${id}`)
     },
-    save: async () => {
-        return await axiosInstance.post("/books")
+    save: async (payload) => {
+        return await axiosInstance.post("/books", payload)
     },
-    update: async () => {
-        return await axiosInstance.put(`/books/${id}`)
+    update: async (payload, id) => {
+        return await axiosInstance.put(`/books/${id}`, payload, id)
     },
 }
 

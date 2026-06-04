@@ -13,6 +13,7 @@ import BookList from './pages/BookList';
 import BookDetails from './pages/BookDetails';
 import CategoryList from './pages/CategoryList';
 import AuthorList from './pages/AuthorList';
+import BookFormPage from './pages/BookFormPage';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/books/:id" element={<BookDetails />} />
             <Route path="/categories" element={<CategoryList />} />
             <Route path="/authors" element={<AuthorList />} />
+            <Route path="/book-form" element={<BookFormPage />} />
           </Routes>
         </Box>
       </BrowserRouter>

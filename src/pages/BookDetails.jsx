@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axiosInstance from "../axios";
+import booksRepository from "../components/repository/booksRepository";
 import { Container, Typography, Button, CardMedia, Paper } from "@mui/material";
 
 
@@ -14,7 +14,7 @@ export default function BookDetails() {
     const [notFound, setNotFound] = useState(false)
 
     useEffect(() => {
-        axiosInstance.get(`/books/${id}`)
+        booksRepository.findById(id)
             .then((response) => {
                 setBook(response.data)
                 setNotFound(false)

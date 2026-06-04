@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "../axios";
+import booksRepository from "../components/repository/booksRepository";
 import BookCard from "../components/BookCard";
 import {
     Box,
@@ -15,7 +15,7 @@ const BookList = () => {
     const [notFound, setNotFound] = useState(false)
 
     useEffect(() => {
-        axiosInstance.get("/books")
+        booksRepository.listAll()
             .then((response) => {
                 console.log(response)
                 setBooks(response.data)

@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import axiosInstance from "../axios";
 import BookCard from "../components/BookCard";
 import {
     Box,
@@ -9,13 +11,22 @@ import {
 
 const BookList = () => {
 
+    const [books, setBooks] = useState([])
+    const [notFound, setNotFound] = useState(false)
 
-    const books = [
-        { id: 1, name: "Laptop", price: 999, description: "High-performance laptop with 16GB RAM and 512GB SSD." },
-        { id: 2, name: "Phone", price: 599, description: "Latest smartphone with an OLED display and 128GB storage." },
-        { id: 3, name: "Mouse", price: 199, description: "Ergonomic wireless mouse with adjustable DPI." },
-        { id: 4, name: "Keyboard", price: 299, description: "Mechanical keyboard with RGB backlighting." },
-    ];
+    useEffect(() => {
+        axiosInstance.get("/books")
+            .then((response) => {
+                console.log(response)
+                setBooks(response.data)
+                setNotFound(false)
+            })
+            .catch((e) => {
+                console.error(e)
+                setNotFound(true)
+            })
+
+    }, [])
 
     return (
         <Container>
@@ -34,7 +45,7 @@ const BookList = () => {
 
             >
                 {
-                    books.map((product) => {
+                    books?.map((product) => {
                         return (
                             <Grid
                                 key={product.id}

@@ -26,9 +26,10 @@ function App() {
           <Routes>
             <Route path="/" element={<BookList />} />
             <Route path="/books/:id" element={<BookDetails />} />
+            <Route path="/books/new" element={<BookFormPage />} />
+            <Route path="/books/update/:id" element={<BookFormPage />} />
             <Route path="/categories" element={<CategoryList />} />
             <Route path="/authors" element={<AuthorList />} />
-            <Route path="/book-form" element={<BookFormPage />} />
           </Routes>
         </Box>
       </BrowserRouter>

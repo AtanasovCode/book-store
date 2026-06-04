@@ -1,77 +1,25 @@
+import { Button, Card, CardContent, CardMedia, Typography, CardActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import {
-    Typography,
-    Button,
-    Card,
-    CardActionArea,
-    CardMedia,
-    CardContent,
-    Box,
-} from "@mui/material";
-import { grey, blue } from "@mui/material/colors";
 
 
-const BookCard = ({ book }) => {
-
-    const navigate = useNavigate()
+export default function BookCard({ product }) {
+    const navigate = useNavigate();
 
     return (
-        <Card
-            sx={{
-                p: 1,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid #6f6c6c",
-                borderRadius: "16px",
-                transition: "all .3s ease-in-out",
-                cursor: "pointer",
-                "&:hover": {
-                    borderColor: "#fff"
-                }
-            }}
-        >
-            <CardActionArea onClick={() => navigate(`/books/${book.name}`)}>
-                <CardMedia
-                    component="img"
-                    alt={book.name}
-                    sx={{
-                        width: "100%",
-                        aspectRatio: "4/3",
-                        backgroundColor: "rgb(0, 40, 100)",
-                        borderRadius: "16px",
-                        mb: 1,
-                    }}
-                >
-                    {/* Empty for image placeholder */}
-                </CardMedia>
-                <Box
-                    sx={{
-                        width: "100%",
-                        p: 1,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        gap: 1,
-                    }}
-                >
-                    <Typography
-                        variant="h5"
-                        sx={{
-                            width: "100%",
-                            textAlign: "left"
-                        }}>
-                        {book.name}
-                    </Typography>
-                    <Typography variant="body1">
-                        ${book.price}
-                    </Typography>
-                </Box>
-            </CardActionArea>
+        <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+            {/* <CardMedia component="img" height="160" image={productImage} alt={product.name} /> */}
+            <CardContent sx={{ flexGrow: 1 }}>
+                <Typography variant="h6">{product.name}</Typography>
+                <Typography variant="body1" sx={{ my: 1 }}>${product.price}</Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small" variant="contained" onClick={() => navigate(`/books/${product.id}`)}>
+                    See Details
+                </Button>
+                <Button size="small" variant="outlined">
+                    Add to Cart
+                </Button>
+            </CardActions>
         </Card>
     );
 }
-
-export default BookCard;

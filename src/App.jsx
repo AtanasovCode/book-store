@@ -5,11 +5,12 @@ import { CssBaseline } from '@mui/material';
 import { theme } from './theme';
 import { Box } from '@mui/material';
 
-// Route Imports
-import BookList from './pages/BookList';
-
 // Component imports
 import NavBar from './components/NavBar';
+
+// Route Imports
+import BookList from './pages/BookList';
+import BookDetails from './pages/BookDetails';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Box sx={{ mt: 16, pb: 5 }}>
           <Routes>
             <Route path="/" element={<BookList />} />
+            <Route path="/books/:id" element={<BookDetails />} />
           </Routes>
         </Box>
       </BrowserRouter>

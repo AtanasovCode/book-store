@@ -34,13 +34,13 @@ const BookList = () => {
 
             >
                 {
-                    books.map((book) => {
+                    books.map((product) => {
                         return (
                             <Grid
-                                key={book.id}
+                                key={product.id}
                                 size={{ xs: 12, sm: 6, md: 4, }}
                             >
-                                <BookCard book={book} />
+                                <BookCard product={product} />
                             </Grid>
                         );
                     })
